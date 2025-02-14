@@ -21,8 +21,9 @@ body {
     margin: 20px 20;
   }
   
-  input, select, button {
+  input, select {
     padding: 10px;
+    width: 50%;
     margin: 5px;
     border-radius: 5px;
     border: 1px solid #D3D3D3;
@@ -36,12 +37,19 @@ body {
   }
   
   button {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
     background-color: #FFB703; 
     color: #333333;
+    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
+    border: 1px solid #D3D3D3;
     transition: background-color 0.3s;
+    font-family: 'Poppins', sans-serif;
   }
+  
   
   button:hover {
     background-color: #E59500;
