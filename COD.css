@@ -1,60 +1,73 @@
+/* Aesthetic Color Palette for Recipe Finder Blog */
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    padding: 20px;
-    background: #f7f7f7;
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .search-section {
-    flex: 2;
-    padding: 20px;
-    background: #e0e0e0;
-    border-radius: 10px;
-    height: fit-content;
-  }
-  
-  .blog-section {
-    flex: 3;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    padding-left: 20px;
-  }
-  
-  .blog-card {
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
-  }
-  
-  .blog-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .blog-card img {
-    width: 100%;
-    border-radius: 10px;
-  }
-  
-  input, select, button {
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 100%;
-  }
-  
-  button {
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #45A049;
-  }
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  padding: 20px;
+  background-color: #FAF3E0; /* Soft Cream */
+  color: #4A4A4A; /* Warm Gray */
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  background-color: #6A994E; /* Fresh Green */
+  color: #FFFFFF;
+  font-size: 1.8rem;
+}
+
+.search-section {
+  text-align: center;
+  margin: 20px 0;
+}
+
+input, select, button {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid #D3D3D3;
+  font-size: 1rem;
+}
+
+button {
+  background-color: #FFB703; /* Sunny Yellow */
+  color: #333333;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #E59500; /* Deep Amber */
+}
+
+.blog-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.blog-card {
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+}
+
+.blog-card img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #3A5A40; /* Deep Forest Green */
+  color: #FFFFFF;
+  font-size: 0.9rem;
+}
