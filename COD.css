@@ -1,16 +1,18 @@
-/* Aesthetic Color Palette for Recipe Finder Blog */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   line-height: 1.6;
   padding: 20px;
-  background-color: #FAF3E0; /* Soft Cream */
-  color: #4A4A4A; /* Warm Gray */
+  background-color: #FAF3E0; 
+  color: #4A4A4A; 
 }
 
 header {
   text-align: center;
   padding: 20px;
-  background-color: #6A994E; /* Fresh Green */
+  background-color: #6A994E; 
   color: #FFFFFF;
   font-size: 1.8rem;
 }
@@ -29,7 +31,7 @@ input, select, button {
 }
 
 button {
-  background-color: #FFB703; /* Sunny Yellow */
+  background-color: #FFB703; 
   color: #333333;
   font-weight: bold;
   cursor: pointer;
@@ -37,7 +39,7 @@ button {
 }
 
 button:hover {
-  background-color: #E59500; /* Deep Amber */
+  background-color: #E59500; 
 }
 
 .blog-section {
@@ -67,7 +69,7 @@ footer {
   text-align: center;
   padding: 10px;
   margin-top: 20px;
-  background-color: #3A5A40; /* Deep Forest Green */
+  background-color: #3A5A40; 
   color: #FFFFFF;
   font-size: 0.9rem;
 }
