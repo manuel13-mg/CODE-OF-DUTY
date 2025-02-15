@@ -1,0 +1,34 @@
+<script>
+  const log = (msg) => (document.getElementById('recipe').innerHTML = msg);
+  const socket = new WebSocket('ws://localhost:8080');
+
+  socket.onopen = () => log('Connected to WebSocket');
+  socket.onmessage = (e) => {
+    try {
+      const data = JSON.parse(e.data);
+      if (data.recipe) {
+        log(`<strong>Recipe:</strong><br>${data.recipe}`);
+      } else if (data.message) {
+        log(data.message);
+      } else if (data.error) {
+        log(`<span style="color:red;">Error: ${data.error}</span>`);
+      }
+    } catch (err) {
+      log('Received non-JSON data');
+    }
+  };
+  socket.onerror = () => log('WebSocket error');
+  socket.onclose = () => log('Disconnected from WebSocket');
+
+  function send() {
+    const ingredients = document.getElementById('ingredients').value.trim();
+    if (ingredients) {
+      const request = JSON.stringify({ ingredients });
+      socket.send(request);
+      log('Fetching recipe...');
+    } else {
+      log('Please enter ingredients');
+    }
+  }
+</script>
+
