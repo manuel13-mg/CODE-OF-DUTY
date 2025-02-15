@@ -10,7 +10,9 @@ function handleSearch() {
     }
     searchInput.value = ''; 
   }
-
+function goToHomePy() {
+    window.location.href = 'home.py';
+  }
 
 searchInput.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
