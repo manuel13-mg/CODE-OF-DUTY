@@ -1,6 +1,6 @@
 import sqlite3
 import re
-from openai import OpenAI
+import groq
 from datetime import datetime
 
 # Connect to SQLite database (or create it if it doesn't exist)
@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS ingredients (
     expiry_date TEXT NOT NULL
 )
 ''')
+conn.commit()
 
 # Function to add ingredient and expiry date to the database
 def add_ingredient(ingredient, expiry_date):
@@ -30,45 +31,50 @@ def get_top_expiry_ingredients(limit=4):
     SELECT ingredient, expiry_date FROM ingredients
     ORDER BY expiry_date ASC LIMIT ?
     ''', (limit,))
-    results = cursor.fetchall()
-    return results
+    return cursor.fetchall()
 
-# Initialize OpenAI client
-client = OpenAI(
-  base_url = "https://integrate.api.nvidia.com/v1",
-  api_key = "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"
-)
+# Initialize Groq client
+client = groq.Client(api_key="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")  # Replace with your API key
 
-# Function to generate recipe using OpenAI
+# Function to generate recipe using Groq
 def generate_recipe(ingredients):
     ingredient_list = ', '.join([ingredient for ingredient, _ in ingredients])
     prompt = f"Suggest a recipe using the following ingredients: {ingredient_list}. Use existing dishes only, do not create new ones. Prioritize recipes with the closest expiry date first."
 
-    completion = client.chat.completions.create(
-      model="deepseek-ai/deepseek-r1",
-      messages=[{"role":"user","content":prompt}],
-      temperature=0.6,
-      top_p=0.7,
-      max_tokens=4096,
-      stream=True
-    )
+    try:
+        response = client.chat.completions.create(
+            model="mixtral-8x7b-32768", 
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=512,
+            temperature=0.6,
+            top_p=0.7
+        )
 
-    output = ""
-    for chunk in completion:
-        if chunk.choices[0].delta.content is not None:
-            output += chunk.choices[0].delta.content
+        # ✅ Fix: Access response correctly
+        output = response.choices[0].message.content
 
-    # Apply regex to clean the output by removing text between </think> tags
-    cleaned_output = re.sub(r'</think>.*?</think>', '', output, flags=re.DOTALL).strip()
-    return cleaned_output
+        # Apply regex to clean the output by removing text between </think> tags
+        cleaned_output = re.sub(r'</think>.*?</think>', '', output, flags=re.DOTALL).strip()
+        return cleaned_output
 
-# User inputs ingredients and expiry date until "exit" is entered or at least a dozen values are entered
+    except Exception as e:
+        return f"An error occurred: {e}"
+
+# User inputs ingredients and expiry date until "exit" is entered or at least 12 values are entered
 entry_count = 0
 while entry_count < 12:
     ingredient_input = input("Enter ingredient (or type 'exit' to finish): ").strip()
     if ingredient_input.lower() == 'exit':
         break
     expiry_date_input = input("Enter expiry date (YYYY-MM-DD): ").strip()
+    
+    # Validate date format
+    try:
+        datetime.strptime(expiry_date_input, "%Y-%m-%d")
+    except ValueError:
+        print("Invalid date format. Please use YYYY-MM-DD.")
+        continue
+
     if ingredient_input and expiry_date_input:
         add_ingredient(ingredient_input, expiry_date_input)
         entry_count += 1
@@ -86,9 +92,10 @@ cursor = conn.cursor()
 # Generate recipe using the top few ingredients closest to expiry
 top_ingredients = get_top_expiry_ingredients()
 if top_ingredients:
-    print("Using ingredients with closest expiry dates:")
+    print("\nUsing ingredients with closest expiry dates:")
     for ingredient, expiry_date in top_ingredients:
         print(f"{ingredient} (Expiry Date: {expiry_date})")
+
     recipe = generate_recipe(top_ingredients)
     print("\nGenerated Recipe:\n")
     print(recipe)
