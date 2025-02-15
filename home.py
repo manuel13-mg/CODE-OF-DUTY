@@ -35,7 +35,7 @@ st.markdown(
     }
 
     .stTextInput>label {
-        color: #777;
+        color: #000000;
     }
 
     .stButton>button {
@@ -60,6 +60,9 @@ st.markdown(
         padding: 10px;
         margin-top: 10px;
     }
+    .page-label>label {
+        color: #000000 !important; /* Black for the page labels */
+    }
 
     .recipe-output {
         margin-top: 20px;
@@ -70,6 +73,12 @@ st.markdown(
         white-space: pre-wrap;
         color: #000000;
         font-size: 1.1em;
+    }
+    p {
+        color: #000000; /* Black for paragraph text */
+    }
+    #generated-recipe {
+        color: #000000; /* Black for the element with id="generated-recipe" */
     }
     </style>
     """,
